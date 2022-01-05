@@ -3,7 +3,7 @@ package springboot.api.tutorial.model;
 import java.util.Objects;
 
 import javax.persistence.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener; 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 //import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "products")
@@ -11,7 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 //@JsonIgnoreProperties(value = { "created_at", "updated_at" }, allowGetters = true)
 public class Product {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Integer id;
   @Column(name = "title")
   private String title;
@@ -19,6 +19,8 @@ public class Product {
   private String description;
   @Column(name = "price")
   private float price;
+  @Column(name = "category")
+  private String category;
   /*@Column(nullable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   @CreatedDate
@@ -28,11 +30,12 @@ public class Product {
   @LastModifiedDate
   private Date updated_at;
   */public Product() {}
-  public Product(Integer id, String title, String description, float price) {
+  public Product(Integer id, String title, String description, float price,String category) {
     this.id = id;
     this.title = title;
     this.description = description;
     this.price = price;
+    this.category = category;
   }
   public Integer getId() {
     return id;
@@ -58,6 +61,12 @@ public class Product {
   public void setPrice(float price) {
     this.price = price;
   }
+  public String getCategory() {
+   return category;
+ }
+ public void setCategory(String category) {
+   this.category = category;
+ }
   /*public Date getCreated_at() {
     return created_at;
   }
@@ -73,16 +82,17 @@ public class Product {
       return false;
     Product product = (Product) p;
     return Objects.equals(this.id, product.id) && Objects.equals(this.title, product.title) && Objects.equals(this.description, product.description)
-        && Objects.equals(this.price, product.price);
+        && Objects.equals(this.price, product.price) && Objects.equals(this.category, product.category);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.id, this.title, this.description, this.price);
+    return Objects.hash(this.id, this.title, this.description, this.price,this.category);
   }
 
   @Override
   public String toString() {
-    return "Product{" + "id=" + this.id + ", title="+ this.title + ", description='" + this.description + '\'' + ", status=" + this.price + '}';
+    return "Product[id=" + id + ", title="+ title + ", description=" + description + ",price="+price+",category=" + category + "]";
   }
 }
+
