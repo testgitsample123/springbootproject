@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src="https://kendo.cdn.telerik.com/2021.3.1109/js/jquery.min.js"></script>
+  <script src="https://kendo.cdn.telerik.com/2014.3.1411/js/kendo.web.min.js"></script>
+    
+  <script src="https://kendo.cdn.telerik.com/2021.3.1109/js/kendo.all.min.js"></script>
+    
+</head>
+<body>
+  <div class="container" >
+    <input type="button" value="Load Products Page" id="buttonLoadProducts" class="btn btn-primary m-2" />
+  </div>
+  <div class="table" id="tableProducts" >
+    <ul id="products">
+    <li> </li>
+    </ul>
+  </div>
+
+  <div class="form-group row">
+    <label for="productName" class="col-sm-2 col-form-label mt-2" id="LabelProductName">Product Title: </label>
+    <div>
+      <input type="text" class="form-control mt-2" id="fieldProductName" required />
+    </div>
+    <label for="productDescription" class="col-sm-2 col-form-label mt-2" id="LabelProductDescription">Product Title: </label>
+    <div>
+      <input type="text" class="form-control mt-2" id="fieldProductDescription" required />
+    </div>
+    <label for="productPrice" class="col-sm-2 col-form-label mt-2" id="LabelProductPrice">Product Title: </label>
+    <div>
+      <input type="number" class="form-control mt-2" id="fieldProductPrice" required />
+    </div>
+    <div class="col-sm-4 mt-2">
+      <input type="button" value="Add" class="btn btn-secondary mt-2" id="buttonAdd" />
+      <input type="button" value="Update" class="btn btn-secondary mt-2" id="buttonUpdate" />
+      <input type="button" value="Delete" class="btn btn-secondary mt-2" id="buttonDelete" />
+    </div>
+  </div>
+  <script>
+ $(function(){
+	 console.log("Welcome to products page");
+     var $buttonLoad =$("#buttonLoadProducts").val();
+     var $products=$("#products").val();
+     var $title=$("#fieldProductName").val();
+     var $description=$("#fieldProductDescription").val();
+     var $price=$("#fieldProductPrice").val();
+    
+    $.ajax({ 
+         type: "GET",
+         url: "http://localhost:5050/api/productList",
+         contentType:"application/json",
+         success: function(productList){   
+          console.log("Get Request Called");
+          alert(productList);
+          $.each(productList, function(i,product){
+        	  //alert(product.title);
+            // $products.append('<li>Title: '+product.title+', Description: '+product.description+ ', Price: '+product.price+ '<li>'); 
+          });
+         },
+         error:function(error){
+         console.log(error);
+          alert("error loading products");
+         }
+      });
+     
+     $("#buttonAdd").on("click",function(){
+    	 var product={};
+    	 product.title=$("#fieldProductName").val();
+    	 product.description=$("#fieldProductDescription").val();
+    	 product.price=$("#fieldProductPrice").val();
+         $.ajax({
+             type:"POST",
+             url: "http://localhost:5050/api/products",
+             contentType:"application/json",
+             data:product,
+             
+             success: function(newProduct){
+                 console.log("Post Request Called");
+                 //$products.append('<li>Title: '+newProduct.title+', Description: '+newProduct.description+ ', Price: '+newProduct.price+ '<li>');
+             },
+             error: function(){
+                 alert("Error creating the Product");
+             }
+         });
+     });
+ });
+	  
+      /*
+      
+     */
+      
+  </script>
+</body>
+</html>
