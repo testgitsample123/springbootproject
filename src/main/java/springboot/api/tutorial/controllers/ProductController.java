@@ -27,7 +27,7 @@ import springboot.api.tutorial.service.CrudService;
 @RestController
 @Controller
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:5050")
+@CrossOrigin(origins = "http://localhost:9090")
 public class ProductController {
 
     @Autowired
