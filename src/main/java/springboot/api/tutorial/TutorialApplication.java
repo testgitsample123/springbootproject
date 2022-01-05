@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class TutorialApplication {
 
 	public static void main(String[] args) {
-		System.out.println("Hello Akshat");
+		System.out.println("Hello ");
 		SpringApplication.run(TutorialApplication.class, args);
 	}
 
